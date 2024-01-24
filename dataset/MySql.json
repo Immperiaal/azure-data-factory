@@ -1,0 +1,15 @@
+{
+	"name": "MySql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "MySql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "MySqlTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": "metadata"
+		}
+	}
+}

@@ -1,0 +1,37 @@
+{
+	"name": "Table",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Prueba",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"output": {
+				"type": "string"
+			},
+			"file": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().file",
+					"type": "Expression"
+				},
+				"container": {
+					"value": "@dataset().output",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
