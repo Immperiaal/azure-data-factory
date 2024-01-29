@@ -40,14 +40,8 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "BinaryMetadata",
-						"type": "DatasetReference",
-						"parameters": {
-							"Container": {
-								"value": "@pipeline().parameters.Container",
-								"type": "Expression"
-							}
-						}
+						"referenceName": "StgBooks",
+						"type": "DatasetReference"
 					},
 					"fieldList": [
 						"childItems"
@@ -58,7 +52,7 @@
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
-						"type": "BinaryReadSettings"
+						"type": "DelimitedTextReadSettings"
 					}
 				}
 			},
@@ -104,7 +98,7 @@
 					},
 					"ifTrueActivities": [
 						{
-							"name": "Copy data1",
+							"name": "CopyStgToRaw",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -155,23 +149,23 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "stg",
+									"referenceName": "StgBooks",
 									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "RawMetadata",
+									"referenceName": "RawBooks",
 									"type": "DatasetReference"
 								}
 							]
 						},
 						{
-							"name": "Delete1",
+							"name": "DeleteStg",
 							"type": "Delete",
 							"dependsOn": [
 								{
-									"activity": "Copy data1",
+									"activity": "CopyStgToRaw",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -187,7 +181,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataset": {
-									"referenceName": "stg",
+									"referenceName": "StgBooks",
 									"type": "DatasetReference"
 								},
 								"logStorageSettings": {

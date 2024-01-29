@@ -1,5 +1,5 @@
 {
-	"name": "stg",
+	"name": "StgBooks",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "Prueba",
@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"folderPath": "books",
 				"container": "stg"
 			},
 			"columnDelimiter": ",",

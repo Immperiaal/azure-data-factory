@@ -1,5 +1,5 @@
 {
-	"name": "RawMetadata",
+	"name": "RawBooks",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "Prueba",
@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"folderPath": "metadata",
+				"folderPath": "books",
 				"container": "raw"
 			},
 			"columnDelimiter": ",",
