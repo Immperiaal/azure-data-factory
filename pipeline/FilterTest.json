@@ -40,7 +40,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "StgBooks",
+						"referenceName": "Stg",
 						"type": "DatasetReference"
 					},
 					"fieldList": [
@@ -149,7 +149,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "StgBooks",
+									"referenceName": "Stg",
 									"type": "DatasetReference"
 								}
 							],
@@ -181,16 +181,10 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataset": {
-									"referenceName": "StgBooks",
+									"referenceName": "Stg",
 									"type": "DatasetReference"
 								},
-								"logStorageSettings": {
-									"linkedServiceName": {
-										"referenceName": "Prueba",
-										"type": "LinkedServiceReference"
-									}
-								},
-								"enableLogging": true,
+								"enableLogging": false,
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
 									"recursive": true,
@@ -202,11 +196,6 @@
 				}
 			}
 		],
-		"parameters": {
-			"Container": {
-				"type": "string"
-			}
-		},
 		"variables": {
 			"flag": {
 				"type": "String"
