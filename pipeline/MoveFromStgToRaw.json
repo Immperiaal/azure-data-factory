@@ -12,7 +12,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "flag",
+					"variableName": "current_date",
 					"value": {
 						"value": "@formatDateTime(utcnow(),'yyyyMMdd')",
 						"type": "Expression"
@@ -74,7 +74,7 @@
 						"type": "Expression"
 					},
 					"condition": {
-						"value": "@equals(item().name,concat(variables('flag'),'.flg'))",
+						"value": "@equals(item().name,concat(variables('current_date'),'.flg'))",
 						"type": "Expression"
 					}
 				}
@@ -116,7 +116,7 @@
 										"type": "AzureBlobStorageReadSettings",
 										"recursive": true,
 										"wildcardFolderPath": {
-											"value": "@variables('flag')",
+											"value": "@variables('current_date')",
 											"type": "Expression"
 										},
 										"wildcardFileName": "*.csv",
@@ -188,6 +188,10 @@
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
 									"recursive": true,
+									"wildcardFileName": {
+										"value": "@variables('current_date')",
+										"type": "Expression"
+									},
 									"enablePartitionDiscovery": false
 								}
 							}
@@ -197,10 +201,10 @@
 			}
 		],
 		"variables": {
-			"flag": {
+			"fichero": {
 				"type": "String"
 			},
-			"fichero": {
+			"current_date": {
 				"type": "String"
 			}
 		},
