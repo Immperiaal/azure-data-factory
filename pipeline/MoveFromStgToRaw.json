@@ -41,7 +41,13 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "DataOrigin",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"origin": {
+								"value": "@pipeline().parameters.origin",
+								"type": "Expression"
+							}
+						}
 					},
 					"fieldList": [
 						"childItems"
@@ -150,18 +156,30 @@
 							"inputs": [
 								{
 									"referenceName": "DataOrigin",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"origin": {
+											"value": "@pipeline().parameters.origin",
+											"type": "Expression"
+										}
+									}
 								}
 							],
 							"outputs": [
 								{
 									"referenceName": "DataDestination",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"destination": {
+											"value": "@pipeline().parameters.destination",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						},
 						{
-							"name": "DeleteStg",
+							"name": "DeleteStgFlg",
 							"type": "Delete",
 							"dependsOn": [
 								{
@@ -182,14 +200,62 @@
 							"typeProperties": {
 								"dataset": {
 									"referenceName": "DataOrigin",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"origin": {
+											"value": "@pipeline().parameters.origin",
+											"type": "Expression"
+										}
+									}
 								},
 								"enableLogging": false,
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
 									"recursive": true,
 									"wildcardFileName": {
-										"value": "@concat(variables('current_date'),'*')",
+										"value": "@concat(variables('current_date'),'.flg')",
+										"type": "Expression"
+									},
+									"enablePartitionDiscovery": false
+								}
+							}
+						},
+						{
+							"name": "DeleteStgBooks",
+							"type": "Delete",
+							"dependsOn": [
+								{
+									"activity": "CopyStgToRaw",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataset": {
+									"referenceName": "DataOrigin",
+									"type": "DatasetReference",
+									"parameters": {
+										"origin": {
+											"value": "@pipeline().parameters.origin",
+											"type": "Expression"
+										}
+									}
+								},
+								"enableLogging": false,
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"wildcardFileName": {
+										"value": "@variables('current_date')",
 										"type": "Expression"
 									},
 									"enablePartitionDiscovery": false
@@ -204,6 +270,10 @@
 			"origin": {
 				"type": "string",
 				"defaultValue": "stg"
+			},
+			"destination": {
+				"type": "string",
+				"defaultValue": "raw"
 			}
 		},
 		"variables": {
