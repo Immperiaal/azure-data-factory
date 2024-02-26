@@ -41,7 +41,13 @@
 				"typeProperties": {
 					"dataset": {
 						"referenceName": "Stg",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"origin": {
+								"value": "@pipeline().parameters.origin",
+								"type": "Expression"
+							}
+						}
 					},
 					"fieldList": [
 						"childItems"
@@ -189,7 +195,7 @@
 									"type": "AzureBlobStorageReadSettings",
 									"recursive": true,
 									"wildcardFileName": {
-										"value": "@{variables('current_date')}",
+										"value": "@concat(variables('current_date'),'*')",
 										"type": "Expression"
 									},
 									"enablePartitionDiscovery": false
@@ -200,6 +206,12 @@
 				}
 			}
 		],
+		"parameters": {
+			"origin": {
+				"type": "string",
+				"defaultValue": "stg"
+			}
+		},
 		"variables": {
 			"fichero": {
 				"type": "String"
