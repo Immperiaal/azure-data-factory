@@ -1,16 +1,24 @@
 {
-	"name": "RawBooks",
+	"name": "DataDestination",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "Prueba",
 			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"destination": {
+				"type": "string"
+			}
 		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"container": "raw"
+				"container": {
+					"value": "@dataset().destination",
+					"type": "Expression"
+				}
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

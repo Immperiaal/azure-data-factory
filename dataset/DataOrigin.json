@@ -1,16 +1,24 @@
 {
-	"name": "Stg",
+	"name": "DataOrigin",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "Prueba",
 			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"origin": {
+				"type": "string"
+			}
 		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"container": "stg"
+				"container": {
+					"value": "@dataset().origin",
+					"type": "Expression"
+				}
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

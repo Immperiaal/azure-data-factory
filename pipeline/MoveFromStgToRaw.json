@@ -40,14 +40,8 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "Stg",
-						"type": "DatasetReference",
-						"parameters": {
-							"origin": {
-								"value": "@pipeline().parameters.origin",
-								"type": "Expression"
-							}
-						}
+						"referenceName": "DataOrigin",
+						"type": "DatasetReference"
 					},
 					"fieldList": [
 						"childItems"
@@ -155,13 +149,13 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "Stg",
+									"referenceName": "DataOrigin",
 									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "RawBooks",
+									"referenceName": "DataDestination",
 									"type": "DatasetReference"
 								}
 							]
@@ -187,7 +181,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataset": {
-									"referenceName": "Stg",
+									"referenceName": "DataOrigin",
 									"type": "DatasetReference"
 								},
 								"enableLogging": false,
