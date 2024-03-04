@@ -121,8 +121,8 @@
 							}
 						},
 						{
-							"name": "Wait",
-							"type": "Wait",
+							"name": "If Condition1",
+							"type": "IfCondition",
 							"dependsOn": [
 								{
 									"activity": "FlagExists",
@@ -133,7 +133,21 @@
 							],
 							"userProperties": [],
 							"typeProperties": {
-								"waitTimeInSeconds": 60
+								"expression": {
+									"value": "@equals(variables('FlagExists'),true)",
+									"type": "Expression"
+								},
+								"ifFalseActivities": [
+									{
+										"name": "Wait",
+										"type": "Wait",
+										"dependsOn": [],
+										"userProperties": [],
+										"typeProperties": {
+											"waitTimeInSeconds": 60
+										}
+									}
+								]
 							}
 						}
 					],
