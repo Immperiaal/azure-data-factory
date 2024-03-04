@@ -1,0 +1,84 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "bdac3adf"
+		},
+		"AzureDatabricks_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks'"
+		},
+		"MySql_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'MySql'"
+		},
+		"Prueba_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Prueba'"
+		},
+		"AzureDatabricks_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0130-142130-e572svn2"
+		},
+		"FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_origin": {
+			"type": "string",
+			"defaultValue": "stg"
+		},
+		"FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_destination": {
+			"type": "string",
+			"defaultValue": "raw"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "bdac3adf_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureDatabricks_accessToken": {
+						"value": "[parameters('AzureDatabricks_accessToken')]"
+					},
+					"MySql_connectionString": {
+						"value": "[parameters('MySql_connectionString')]"
+					},
+					"Prueba_connectionString": {
+						"value": "[parameters('Prueba_connectionString')]"
+					},
+					"AzureDatabricks_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('AzureDatabricks_properties_typeProperties_existingClusterId')]"
+					},
+					"FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_origin": {
+						"value": "[parameters('FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_origin')]"
+					},
+					"FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_destination": {
+						"value": "[parameters('FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_destination')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
