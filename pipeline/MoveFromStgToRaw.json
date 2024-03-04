@@ -32,6 +32,10 @@
 				],
 				"userProperties": [],
 				"typeProperties": {
+					"expression": {
+						"value": "@equals(variables('FlagExists'),true)",
+						"type": "Expression"
+					},
 					"activities": [
 						{
 							"name": "CheckFlag",
@@ -83,11 +87,35 @@
 							"userProperties": [],
 							"typeProperties": {
 								"items": {
-									"value": "@activity('Check Flag').output.childItems",
+									"value": "@activity('CheckFlag').output.childItems",
 									"type": "Expression"
 								},
 								"condition": {
 									"value": "@equals(item().name,concat(variables('current_date'),'.flg'))",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "FlagExists",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "FilterFlag",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "FlagExists",
+								"value": {
+									"value": "@greaterOrEquals(activity('FilterFlag').output.FilteredItemsCount,1)",
 									"type": "Expression"
 								}
 							}
@@ -97,8 +125,8 @@
 				}
 			},
 			{
-				"name": "CopyStgToRaw",
-				"type": "Copy",
+				"name": "FlagExits",
+				"type": "IfCondition",
 				"dependsOn": [
 					{
 						"activity": "Try Find Flag",
@@ -107,155 +135,169 @@
 						]
 					}
 				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
 				"userProperties": [],
 				"typeProperties": {
-					"source": {
-						"type": "DelimitedTextSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"wildcardFolderPath": {
-								"value": "@variables('current_date')",
-								"type": "Expression"
+					"expression": {
+						"value": "@equals(variables('FlagExists'),true)",
+						"type": "Expression"
+					},
+					"ifTrueActivities": [
+						{
+							"name": "CopyStgToRaw",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
 							},
-							"wildcardFileName": "*.csv",
-							"enablePartitionDiscovery": false
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"wildcardFolderPath": {
+											"value": "@variables('current_date')",
+											"type": "Expression"
+										},
+										"wildcardFileName": "*.csv",
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".csv"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "DataOrigin",
+									"type": "DatasetReference",
+									"parameters": {
+										"origin": {
+											"value": "@pipeline().parameters.origin",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DataDestination",
+									"type": "DatasetReference",
+									"parameters": {
+										"destination": {
+											"value": "@pipeline().parameters.destination",
+											"type": "Expression"
+										}
+									}
+								}
+							]
 						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
-						}
-					},
-					"sink": {
-						"type": "DelimitedTextSink",
-						"storeSettings": {
-							"type": "AzureBlobStorageWriteSettings"
+						{
+							"name": "DeleteStgFlg",
+							"type": "Delete",
+							"dependsOn": [
+								{
+									"activity": "CopyStgToRaw",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataset": {
+									"referenceName": "DataOrigin",
+									"type": "DatasetReference",
+									"parameters": {
+										"origin": {
+											"value": "@pipeline().parameters.origin",
+											"type": "Expression"
+										}
+									}
+								},
+								"enableLogging": false,
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"wildcardFileName": {
+										"value": "@concat(variables('current_date'),'.flg')",
+										"type": "Expression"
+									},
+									"enablePartitionDiscovery": false
+								}
+							}
 						},
-						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".csv"
-						}
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "DataOrigin",
-						"type": "DatasetReference",
-						"parameters": {
-							"origin": {
-								"value": "@pipeline().parameters.origin",
-								"type": "Expression"
+						{
+							"name": "DeleteStgBooks",
+							"type": "Delete",
+							"dependsOn": [
+								{
+									"activity": "CopyStgToRaw",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataset": {
+									"referenceName": "DataOrigin",
+									"type": "DatasetReference",
+									"parameters": {
+										"origin": {
+											"value": "@concat(pipeline().parameters.origin,'/',variables('current_date'))",
+											"type": "Expression"
+										}
+									}
+								},
+								"enableLogging": false,
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								}
 							}
 						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "DataDestination",
-						"type": "DatasetReference",
-						"parameters": {
-							"destination": {
-								"value": "@pipeline().parameters.destination",
-								"type": "Expression"
-							}
-						}
-					}
-				]
-			},
-			{
-				"name": "DeleteStgFlg",
-				"type": "Delete",
-				"dependsOn": [
-					{
-						"activity": "CopyStgToRaw",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataset": {
-						"referenceName": "DataOrigin",
-						"type": "DatasetReference",
-						"parameters": {
-							"origin": {
-								"value": "@pipeline().parameters.origin",
-								"type": "Expression"
-							}
-						}
-					},
-					"enableLogging": false,
-					"storeSettings": {
-						"type": "AzureBlobStorageReadSettings",
-						"recursive": true,
-						"wildcardFileName": {
-							"value": "@concat(variables('current_date'),'.flg')",
-							"type": "Expression"
-						},
-						"enablePartitionDiscovery": false
-					}
-				}
-			},
-			{
-				"name": "DeleteStgBooks",
-				"type": "Delete",
-				"dependsOn": [
-					{
-						"activity": "CopyStgToRaw",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataset": {
-						"referenceName": "DataOrigin",
-						"type": "DatasetReference",
-						"parameters": {
-							"origin": {
-								"value": "@concat(pipeline().parameters.origin,'/',variables('current_date'))",
-								"type": "Expression"
-							}
-						}
-					},
-					"enableLogging": false,
-					"storeSettings": {
-						"type": "AzureBlobStorageReadSettings",
-						"recursive": true,
-						"enablePartitionDiscovery": false
-					}
+					]
 				}
 			}
 		],
@@ -275,6 +317,9 @@
 			},
 			"current_date": {
 				"type": "String"
+			},
+			"FlagExists": {
+				"type": "Boolean"
 			}
 		},
 		"annotations": []
