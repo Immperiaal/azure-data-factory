@@ -245,7 +245,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"origin": {
-											"value": "@pipeline().parameters.origin",
+											"value": "@concat(pipeline().parameters.origin,'/',variables('current_date'))",
 											"type": "Expression"
 										}
 									}
@@ -254,10 +254,6 @@
 								"storeSettings": {
 									"type": "AzureBlobStorageReadSettings",
 									"recursive": true,
-									"wildcardFileName": {
-										"value": "@variables('current_date')",
-										"type": "Expression"
-									},
 									"enablePartitionDiscovery": false
 								}
 							}
