@@ -23,14 +23,6 @@
 			"type": "string",
 			"defaultValue": "0130-142130-e572svn2"
 		},
-		"FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_origin": {
-			"type": "string",
-			"defaultValue": "stg"
-		},
-		"FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_destination": {
-			"type": "string",
-			"defaultValue": "raw"
-		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -69,12 +61,6 @@
 					},
 					"AzureDatabricks_properties_typeProperties_existingClusterId": {
 						"value": "[parameters('AzureDatabricks_properties_typeProperties_existingClusterId')]"
-					},
-					"FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_origin": {
-						"value": "[parameters('FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_origin')]"
-					},
-					"FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_destination": {
-						"value": "[parameters('FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_destination')]"
 					}
 				}
 			},
