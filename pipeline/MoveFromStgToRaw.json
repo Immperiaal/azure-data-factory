@@ -20,7 +20,7 @@
 				}
 			},
 			{
-				"name": "Try Find Flag",
+				"name": "TryFindFlag",
 				"type": "Until",
 				"dependsOn": [
 					{
@@ -129,7 +129,7 @@
 				"type": "IfCondition",
 				"dependsOn": [
 					{
-						"activity": "Try Find Flag",
+						"activity": "TryFindFlag",
 						"dependencyConditions": [
 							"Succeeded"
 						]
