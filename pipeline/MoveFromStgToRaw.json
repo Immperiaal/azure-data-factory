@@ -119,6 +119,22 @@
 									"type": "Expression"
 								}
 							}
+						},
+						{
+							"name": "Wait",
+							"type": "Wait",
+							"dependsOn": [
+								{
+									"activity": "FlagExists",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": 60
+							}
 						}
 					],
 					"timeout": "0.0:10:00"
