@@ -121,7 +121,7 @@
 							}
 						},
 						{
-							"name": "If Condition1",
+							"name": "WaitForFlag",
 							"type": "IfCondition",
 							"dependsOn": [
 								{
