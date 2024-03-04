@@ -22,6 +22,14 @@
 		"AzureDatabricks_properties_typeProperties_existingClusterId": {
 			"type": "string",
 			"defaultValue": "0130-142130-e572svn2"
+		},
+		"FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_origin": {
+			"type": "string",
+			"defaultValue": "stg"
+		},
+		"FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_destination": {
+			"type": "string",
+			"defaultValue": "raw"
 		}
 	},
 	"variables": {
@@ -890,6 +898,39 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FromStgToRawTrigger')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "MoveFromStgToRaw",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"origin": "[parameters('FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_origin')]",
+							"destination": "[parameters('FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_destination')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Hour",
+						"interval": 24,
+						"startTime": "2024-03-04T18:31:00",
+						"timeZone": "Romance Standard Time"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/MoveFromStgToRaw')]"
+			]
 		}
 	]
 }
