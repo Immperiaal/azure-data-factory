@@ -20,7 +20,7 @@
 			"recurrence": {
 				"frequency": "Hour",
 				"interval": 24,
-				"startTime": "2024-03-05T09:25:00",
+				"startTime": "2024-03-05T10:30:00",
 				"timeZone": "Romance Standard Time"
 			}
 		}
