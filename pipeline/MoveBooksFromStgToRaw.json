@@ -1,5 +1,5 @@
 {
-	"name": "MoveFromStgToRaw",
+	"name": "MoveBooksFromStgToRaw",
 	"properties": {
 		"activities": [
 			{
@@ -339,6 +339,10 @@
 			"destination": {
 				"type": "string",
 				"defaultValue": "raw"
+			},
+			"folder": {
+				"type": "string",
+				"defaultValue": "books"
 			}
 		},
 		"variables": {

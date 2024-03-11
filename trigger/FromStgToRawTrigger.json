@@ -6,7 +6,7 @@
 		"pipelines": [
 			{
 				"pipelineReference": {
-					"referenceName": "MoveFromStgToRaw",
+					"referenceName": "MoveBooksFromStgToRaw",
 					"type": "PipelineReference"
 				},
 				"parameters": {
