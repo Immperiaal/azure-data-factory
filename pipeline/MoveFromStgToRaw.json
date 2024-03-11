@@ -3,81 +3,119 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "ExecutePipelineBooks",
-				"type": "ExecutePipeline",
+				"name": "ExecuteBooks",
+				"type": "IfCondition",
 				"dependsOn": [],
-				"policy": {
-					"secureInput": false
-				},
 				"userProperties": [],
 				"typeProperties": {
-					"pipeline": {
-						"referenceName": "MoveBooksFromStgToRaw",
-						"type": "PipelineReference"
+					"expression": {
+						"value": "@equals(pipeline().parameters.exec_books,true)",
+						"type": "Expression"
 					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"origin": {
-							"value": "@pipeline().parameters.origin",
-							"type": "Expression"
-						},
-						"destination": {
-							"value": "@pipeline().parameters.destination",
-							"type": "Expression"
-						},
-						"folder": {
-							"value": "@pipeline().parameters.folder_books",
-							"type": "Expression"
+					"ifTrueActivities": [
+						{
+							"name": "ExecutePipelineBooks",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"policy": {
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "MoveBooksFromStgToRaw",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"origin": {
+										"value": "@variables('origin')",
+										"type": "Expression"
+									},
+									"destination": {
+										"value": "@variables('destination')",
+										"type": "Expression"
+									},
+									"folder": {
+										"value": "@variables('folder_books')",
+										"type": "Expression"
+									}
+								}
+							}
 						}
-					}
+					]
 				}
 			},
 			{
-				"name": "ExecutePipelineMetadata",
-				"type": "ExecutePipeline",
+				"name": "ExecuteMetadata",
+				"type": "IfCondition",
 				"dependsOn": [],
-				"policy": {
-					"secureInput": false
-				},
 				"userProperties": [],
 				"typeProperties": {
-					"pipeline": {
-						"referenceName": "MoveMetadataFromStgToRaw",
-						"type": "PipelineReference"
+					"expression": {
+						"value": "@equals(pipeline().parameters.exec_metadata,true)",
+						"type": "Expression"
 					},
-					"waitOnCompletion": true,
-					"parameters": {
-						"origin": {
-							"value": "@pipeline().parameters.origin",
-							"type": "Expression"
-						},
-						"destination": {
-							"value": "@pipeline().parameters.destination",
-							"type": "Expression"
-						},
-						"folder": {
-							"value": "@pipeline().parameters.folder_metadata",
-							"type": "Expression"
+					"ifTrueActivities": [
+						{
+							"name": "ExecutePipelineMetadata",
+							"type": "ExecutePipeline",
+							"dependsOn": [],
+							"policy": {
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "MoveMetadataFromStgToRaw",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": true,
+								"parameters": {
+									"origin": {
+										"value": "@variables('origin')",
+										"type": "Expression"
+									},
+									"destination": {
+										"value": "@variables('destination')",
+										"type": "Expression"
+									},
+									"folder": {
+										"value": "@variables('folder_metadata')",
+										"type": "Expression"
+									}
+								}
+							}
 						}
-					}
+					]
 				}
 			}
 		],
 		"parameters": {
+			"exec_books": {
+				"type": "bool",
+				"defaultValue": false
+			},
+			"exec_metadata": {
+				"type": "bool",
+				"defaultValue": true
+			}
+		},
+		"variables": {
 			"origin": {
-				"type": "string",
+				"type": "String",
 				"defaultValue": "stg"
 			},
 			"destination": {
-				"type": "string",
+				"type": "String",
 				"defaultValue": "raw"
 			},
 			"folder_books": {
-				"type": "string",
+				"type": "String",
 				"defaultValue": "books"
 			},
 			"folder_metadata": {
-				"type": "string",
+				"type": "String",
 				"defaultValue": "metadata"
 			}
 		},
