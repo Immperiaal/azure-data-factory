@@ -82,9 +82,16 @@
 				]
 			},
 			{
-				"name": "Delete1",
+				"name": "DeleteStgMetadata",
 				"type": "Delete",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "CopyStgToRaw",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -94,7 +101,22 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"enableLogging": true
+					"dataset": {
+						"referenceName": "DataOrigin",
+						"type": "DatasetReference",
+						"parameters": {
+							"origin": {
+								"value": "@concat(pipeline().parameters.origin,'/',pipeline().parameters.folder)",
+								"type": "Expression"
+							}
+						}
+					},
+					"enableLogging": false,
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					}
 				}
 			}
 		],
