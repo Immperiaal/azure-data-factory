@@ -1,5 +1,5 @@
 {
-	"name": "DataDestination",
+	"name": "DataBooksDestination",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "Prueba",
