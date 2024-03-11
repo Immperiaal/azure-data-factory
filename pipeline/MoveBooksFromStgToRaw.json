@@ -242,6 +242,10 @@
 										"destination": {
 											"value": "@pipeline().parameters.destination",
 											"type": "Expression"
+										},
+										"folder": {
+											"value": "@pipeline().parameters.folder",
+											"type": "Expression"
 										}
 									}
 								}
