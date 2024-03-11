@@ -2,14 +2,25 @@
 	"name": "FromStgToRawTrigger",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
-		"pipelines": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "MoveFromStgToRaw",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"exec_books": true,
+					"exec_metadata": true
+				}
+			}
+		],
 		"type": "ScheduleTrigger",
 		"typeProperties": {
 			"recurrence": {
 				"frequency": "Hour",
 				"interval": 24,
-				"startTime": "2024-03-05T10:30:00",
+				"startTime": "2024-03-05T18:05:00",
 				"timeZone": "Romance Standard Time"
 			}
 		}
