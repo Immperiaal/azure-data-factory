@@ -94,11 +94,11 @@
 		"parameters": {
 			"exec_books": {
 				"type": "bool",
-				"defaultValue": false
+				"defaultValue": true
 			},
 			"exec_metadata": {
 				"type": "bool",
-				"defaultValue": true
+				"defaultValue": false
 			}
 		},
 		"variables": {
