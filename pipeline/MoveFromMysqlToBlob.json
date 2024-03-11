@@ -26,7 +26,7 @@
 						"formatSettings": {
 							"type": "DelimitedTextWriteSettings",
 							"quoteAllText": true,
-							"fileExtension": ".csv"
+							"fileExtension": ".txt"
 						}
 					},
 					"enableStaging": false,
@@ -47,26 +47,20 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "Table",
-						"type": "DatasetReference",
-						"parameters": {
-							"output": {
-								"value": "@pipeline().parameters.output",
-								"type": "Expression"
-							}
-						}
+						"referenceName": "DataDestination",
+						"type": "DatasetReference"
 					}
 				]
 			}
 		],
 		"parameters": {
-			"output": {
-				"type": "string"
-			}
-		},
-		"variables": {
-			"flag": {
-				"type": "String"
+			"folder": {
+				"type": "string",
+				"defaultValue": "metadata"
+			},
+			"destination": {
+				"type": "string",
+				"defaultValue": "stg"
 			}
 		},
 		"annotations": []
