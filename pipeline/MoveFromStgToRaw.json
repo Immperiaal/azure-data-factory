@@ -1,6 +1,86 @@
 {
 	"name": "MoveFromStgToRaw",
 	"properties": {
+		"activities": [
+			{
+				"name": "ExecutePipelineBooks",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "MoveBooksFromStgToRaw",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"origin": {
+							"value": "@pipeline().parameters.origin",
+							"type": "Expression"
+						},
+						"destination": {
+							"value": "@pipeline().parameters.destination",
+							"type": "Expression"
+						},
+						"folder": {
+							"value": "@pipeline().parameters.folder_books",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "ExecutePipelineMetadata",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "MoveMetadataFromStgToRaw",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"origin": {
+							"value": "@pipeline().parameters.origin",
+							"type": "Expression"
+						},
+						"destination": {
+							"value": "@pipeline().parameters.destination",
+							"type": "Expression"
+						},
+						"folder": {
+							"value": "@pipeline().parameters.folder_metadata",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"origin": {
+				"type": "string",
+				"defaultValue": "stg"
+			},
+			"destination": {
+				"type": "string",
+				"defaultValue": "raw"
+			},
+			"folder_books": {
+				"type": "string",
+				"defaultValue": "books"
+			},
+			"folder_metadata": {
+				"type": "string",
+				"defaultValue": "metadata"
+			}
+		},
 		"annotations": []
 	}
 }
