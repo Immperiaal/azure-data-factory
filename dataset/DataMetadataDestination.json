@@ -1,0 +1,31 @@
+{
+	"name": "DataMetadataDestination",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Prueba",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"destination": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "metadata",
+				"container": {
+					"value": "@dataset().destination",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
