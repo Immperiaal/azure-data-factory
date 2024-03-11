@@ -173,7 +173,7 @@
 					},
 					"ifTrueActivities": [
 						{
-							"name": "CopyStgBooksToRaw",
+							"name": "CopyStgToRaw",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -252,7 +252,7 @@
 							"type": "Delete",
 							"dependsOn": [
 								{
-									"activity": "CopyStgBooksToRaw",
+									"activity": "CopyStgToRaw",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -294,7 +294,7 @@
 							"type": "Delete",
 							"dependsOn": [
 								{
-									"activity": "CopyStgBooksToRaw",
+									"activity": "CopyStgToRaw",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -326,116 +326,6 @@
 									"enablePartitionDiscovery": false
 								}
 							}
-						},
-						{
-							"name": "DeleteStgMetadata",
-							"type": "Delete",
-							"dependsOn": [
-								{
-									"activity": "CopyStgMetadataToRaw",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"dataset": {
-									"referenceName": "DataOrigin",
-									"type": "DatasetReference",
-									"parameters": {
-										"origin": {
-											"value": "@concat(pipeline().parameters.origin,'/metadata')",
-											"type": "Expression"
-										}
-									}
-								},
-								"enableLogging": false,
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								}
-							}
-						},
-						{
-							"name": "CopyStgMetadataToRaw",
-							"type": "Copy",
-							"dependsOn": [],
-							"policy": {
-								"timeout": "0.12:00:00",
-								"retry": 0,
-								"retryIntervalInSeconds": 30,
-								"secureOutput": false,
-								"secureInput": false
-							},
-							"userProperties": [],
-							"typeProperties": {
-								"source": {
-									"type": "DelimitedTextSource",
-									"storeSettings": {
-										"type": "AzureBlobStorageReadSettings",
-										"recursive": true,
-										"wildcardFolderPath": "metadata",
-										"wildcardFileName": "*",
-										"enablePartitionDiscovery": false
-									},
-									"formatSettings": {
-										"type": "DelimitedTextReadSettings"
-									}
-								},
-								"sink": {
-									"type": "DelimitedTextSink",
-									"storeSettings": {
-										"type": "AzureBlobStorageWriteSettings"
-									},
-									"formatSettings": {
-										"type": "DelimitedTextWriteSettings",
-										"quoteAllText": true,
-										"fileExtension": ".txt"
-									}
-								},
-								"enableStaging": false,
-								"translator": {
-									"type": "TabularTranslator",
-									"typeConversion": true,
-									"typeConversionSettings": {
-										"allowDataTruncation": true,
-										"treatBooleanAsNumber": false
-									}
-								}
-							},
-							"inputs": [
-								{
-									"referenceName": "DataOrigin",
-									"type": "DatasetReference",
-									"parameters": {
-										"origin": {
-											"value": "@pipeline().parameters.origin",
-											"type": "Expression"
-										}
-									}
-								}
-							],
-							"outputs": [
-								{
-									"referenceName": "DataDestination",
-									"type": "DatasetReference",
-									"parameters": {
-										"destination": {
-											"value": "@pipeline().parameters.destination",
-											"type": "Expression"
-										}
-									}
-								}
-							]
 						}
 					]
 				}
