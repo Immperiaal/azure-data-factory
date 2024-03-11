@@ -48,19 +48,29 @@
 				"outputs": [
 					{
 						"referenceName": "DataDestination",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"destination": {
+								"value": "@pipeline().parameters.destination",
+								"type": "Expression"
+							},
+							"folder": {
+								"value": "@pipeline().parameters.folder",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}
 		],
 		"parameters": {
-			"folder": {
-				"type": "string",
-				"defaultValue": "metadata"
-			},
 			"destination": {
 				"type": "string",
 				"defaultValue": "stg"
+			},
+			"folder": {
+				"type": "string",
+				"defaultValue": "metadata"
 			}
 		},
 		"annotations": []
