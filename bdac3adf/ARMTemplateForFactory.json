@@ -23,13 +23,13 @@
 			"type": "string",
 			"defaultValue": "0130-142130-e572svn2"
 		},
-		"FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_origin": {
-			"type": "string",
-			"defaultValue": "stg"
+		"StgToRawTrigger_properties_MoveFromStgToRaw_parameters_exec_books": {
+			"type": "bool",
+			"defaultValue": true
 		},
-		"FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_destination": {
-			"type": "string",
-			"defaultValue": "raw"
+		"StgToRawTrigger_properties_MoveFromStgToRaw_parameters_exec_metadata": {
+			"type": "bool",
+			"defaultValue": false
 		}
 	},
 	"variables": {
@@ -73,231 +73,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/MoveFromBlobToBlob')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "CopyFromBlobToBlob",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "BinarySource",
-								"storeSettings": {
-									"type": "AzureBlobStorageReadSettings",
-									"recursive": true
-								},
-								"formatSettings": {
-									"type": "BinaryReadSettings"
-								}
-							},
-							"sink": {
-								"type": "BinarySink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "Binary",
-								"type": "DatasetReference",
-								"parameters": {
-									"container": {
-										"value": "@pipeline().parameters.input",
-										"type": "Expression"
-									},
-									"binary": {
-										"value": "@pipeline().parameters.binary",
-										"type": "Expression"
-									}
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Binary",
-								"type": "DatasetReference",
-								"parameters": {
-									"container": {
-										"value": "@pipeline().parameters.output",
-										"type": "Expression"
-									},
-									"binary": {
-										"value": "@pipeline().parameters.binary",
-										"type": "Expression"
-									}
-								}
-							}
-						]
-					},
-					{
-						"name": "DeleteBlobInput",
-						"type": "Delete",
-						"dependsOn": [
-							{
-								"activity": "CopyFromBlobToBlob",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "Binary",
-								"type": "DatasetReference",
-								"parameters": {
-									"container": {
-										"value": "@pipeline().parameters.input",
-										"type": "Expression"
-									},
-									"binary": {
-										"value": "@pipeline().parameters.binary",
-										"type": "Expression"
-									}
-								}
-							},
-							"logStorageSettings": {
-								"linkedServiceName": {
-									"referenceName": "Prueba",
-									"type": "LinkedServiceReference"
-								}
-							},
-							"enableLogging": true,
-							"storeSettings": {
-								"type": "AzureBlobStorageReadSettings",
-								"recursive": true,
-								"enablePartitionDiscovery": false
-							}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"input": {
-						"type": "string"
-					},
-					"output": {
-						"type": "string"
-					},
-					"binary": {
-						"type": "string"
-					}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Binary')]",
-				"[concat(variables('factoryId'), '/linkedServices/Prueba')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/MoveFromMysqlToBlob')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "CopyFromMysqlToBlob",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "MySqlSource"
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".csv"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "MySql",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Table",
-								"type": "DatasetReference",
-								"parameters": {
-									"output": {
-										"value": "@pipeline().parameters.output",
-										"type": "Expression"
-									}
-								}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"output": {
-						"type": "string"
-					}
-				},
-				"variables": {
-					"flag": {
-						"type": "String"
-					}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/MySql')]",
-				"[concat(variables('factoryId'), '/datasets/Table')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/MoveFromStgToRaw')]",
+			"name": "[concat(parameters('factoryName'), '/MoveBooksFromStgToRaw')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -542,6 +318,10 @@
 												"destination": {
 													"value": "@pipeline().parameters.destination",
 													"type": "Expression"
+												},
+												"folder": {
+													"value": "@pipeline().parameters.folder",
+													"type": "Expression"
 												}
 											}
 										}
@@ -642,6 +422,10 @@
 					"destination": {
 						"type": "string",
 						"defaultValue": "raw"
+					},
+					"folder": {
+						"type": "string",
+						"defaultValue": "books"
 					}
 				},
 				"variables": {
@@ -653,6 +437,515 @@
 					},
 					"FlagExists": {
 						"type": "Boolean"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DataOrigin')]",
+				"[concat(variables('factoryId'), '/datasets/DataDestination')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MoveFromBlobToBlob')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "CopyFromBlobToBlob",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "BinarySource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "BinaryReadSettings"
+								}
+							},
+							"sink": {
+								"type": "BinarySink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "Binary",
+								"type": "DatasetReference",
+								"parameters": {
+									"container": {
+										"value": "@pipeline().parameters.input",
+										"type": "Expression"
+									},
+									"binary": {
+										"value": "@pipeline().parameters.binary",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Binary",
+								"type": "DatasetReference",
+								"parameters": {
+									"container": {
+										"value": "@pipeline().parameters.output",
+										"type": "Expression"
+									},
+									"binary": {
+										"value": "@pipeline().parameters.binary",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					},
+					{
+						"name": "DeleteBlobInput",
+						"type": "Delete",
+						"dependsOn": [
+							{
+								"activity": "CopyFromBlobToBlob",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "Binary",
+								"type": "DatasetReference",
+								"parameters": {
+									"container": {
+										"value": "@pipeline().parameters.input",
+										"type": "Expression"
+									},
+									"binary": {
+										"value": "@pipeline().parameters.binary",
+										"type": "Expression"
+									}
+								}
+							},
+							"logStorageSettings": {
+								"linkedServiceName": {
+									"referenceName": "Prueba",
+									"type": "LinkedServiceReference"
+								}
+							},
+							"enableLogging": true,
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"input": {
+						"type": "string"
+					},
+					"output": {
+						"type": "string"
+					},
+					"binary": {
+						"type": "string"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Binary')]",
+				"[concat(variables('factoryId'), '/linkedServices/Prueba')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MoveFromMysqlToBlob')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "CopyFromMysqlToBlob",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "MySqlSource"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".csv"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "MySql",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DataDestination",
+								"type": "DatasetReference",
+								"parameters": {
+									"destination": {
+										"value": "@pipeline().parameters.destination",
+										"type": "Expression"
+									},
+									"folder": {
+										"value": "@pipeline().parameters.folder",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"destination": {
+						"type": "string",
+						"defaultValue": "stg"
+					},
+					"folder": {
+						"type": "string",
+						"defaultValue": "metadata"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/MySql')]",
+				"[concat(variables('factoryId'), '/datasets/DataDestination')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MoveFromStgToRaw')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ExecuteBooks",
+						"type": "IfCondition",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@equals(pipeline().parameters.exec_books,true)",
+								"type": "Expression"
+							},
+							"ifTrueActivities": [
+								{
+									"name": "ExecutePipelineBooks",
+									"type": "ExecutePipeline",
+									"dependsOn": [],
+									"policy": {
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "MoveBooksFromStgToRaw",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {
+											"origin": {
+												"value": "@variables('origin')",
+												"type": "Expression"
+											},
+											"destination": {
+												"value": "@variables('destination')",
+												"type": "Expression"
+											},
+											"folder": {
+												"value": "@variables('folder_books')",
+												"type": "Expression"
+											}
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						"name": "ExecuteMetadata",
+						"type": "IfCondition",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"expression": {
+								"value": "@equals(pipeline().parameters.exec_metadata,true)",
+								"type": "Expression"
+							},
+							"ifTrueActivities": [
+								{
+									"name": "ExecutePipelineMetadata",
+									"type": "ExecutePipeline",
+									"dependsOn": [],
+									"policy": {
+										"secureInput": false
+									},
+									"userProperties": [],
+									"typeProperties": {
+										"pipeline": {
+											"referenceName": "MoveMetadataFromStgToRaw",
+											"type": "PipelineReference"
+										},
+										"waitOnCompletion": true,
+										"parameters": {
+											"origin": {
+												"value": "@variables('origin')",
+												"type": "Expression"
+											},
+											"destination": {
+												"value": "@variables('destination')",
+												"type": "Expression"
+											},
+											"folder": {
+												"value": "@variables('folder_metadata')",
+												"type": "Expression"
+											}
+										}
+									}
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"exec_books": {
+						"type": "bool",
+						"defaultValue": false
+					},
+					"exec_metadata": {
+						"type": "bool",
+						"defaultValue": true
+					}
+				},
+				"variables": {
+					"origin": {
+						"type": "String",
+						"defaultValue": "stg"
+					},
+					"destination": {
+						"type": "String",
+						"defaultValue": "raw"
+					},
+					"folder_books": {
+						"type": "String",
+						"defaultValue": "books"
+					},
+					"folder_metadata": {
+						"type": "String",
+						"defaultValue": "metadata"
+					}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/MoveBooksFromStgToRaw')]",
+				"[concat(variables('factoryId'), '/pipelines/MoveMetadataFromStgToRaw')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MoveMetadataFromStgToRaw')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "CopyStgToRaw",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"wildcardFolderPath": {
+										"value": "@pipeline().parameters.folder",
+										"type": "Expression"
+									},
+									"wildcardFileName": "*",
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DataOrigin",
+								"type": "DatasetReference",
+								"parameters": {
+									"origin": {
+										"value": "@pipeline().parameters.origin",
+										"type": "Expression"
+									}
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DataDestination",
+								"type": "DatasetReference",
+								"parameters": {
+									"destination": {
+										"value": "@pipeline().parameters.destination",
+										"type": "Expression"
+									},
+									"folder": {
+										"value": "@pipeline().parameters.folder",
+										"type": "Expression"
+									}
+								}
+							}
+						]
+					},
+					{
+						"name": "DeleteStgMetadata",
+						"type": "Delete",
+						"dependsOn": [
+							{
+								"activity": "CopyStgToRaw",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "DataOrigin",
+								"type": "DatasetReference",
+								"parameters": {
+									"origin": {
+										"value": "@concat(pipeline().parameters.origin,'/',pipeline().parameters.folder)",
+										"type": "Expression"
+									}
+								}
+							},
+							"enableLogging": false,
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"enablePartitionDiscovery": false
+							}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"parameters": {
+					"origin": {
+						"type": "string",
+						"defaultValue": "stg"
+					},
+					"destination": {
+						"type": "string",
+						"defaultValue": "raw"
+					},
+					"folder": {
+						"type": "string",
+						"defaultValue": "metadata"
 					}
 				},
 				"annotations": []
@@ -741,6 +1034,9 @@
 				"parameters": {
 					"destination": {
 						"type": "string"
+					},
+					"folder": {
+						"type": "string"
 					}
 				},
 				"annotations": [],
@@ -748,7 +1044,10 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"folderPath": "books",
+						"folderPath": {
+							"value": "@dataset().folder",
+							"type": "Expression"
+						},
 						"container": {
 							"value": "@dataset().destination",
 							"type": "Expression"
@@ -813,7 +1112,7 @@
 				"type": "MySqlTable",
 				"schema": [],
 				"typeProperties": {
-					"tableName": "metadata"
+					"tableName": "corpus_libros_metadata"
 				}
 			},
 			"dependsOn": [
@@ -900,7 +1199,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/FromStgToRawTrigger')]",
+			"name": "[concat(parameters('factoryName'), '/StgToRawTrigger')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -913,8 +1212,8 @@
 							"type": "PipelineReference"
 						},
 						"parameters": {
-							"origin": "[parameters('FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_origin')]",
-							"destination": "[parameters('FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_destination')]"
+							"exec_books": "[parameters('StgToRawTrigger_properties_MoveFromStgToRaw_parameters_exec_books')]",
+							"exec_metadata": "[parameters('StgToRawTrigger_properties_MoveFromStgToRaw_parameters_exec_metadata')]"
 						}
 					}
 				],
@@ -923,7 +1222,7 @@
 					"recurrence": {
 						"frequency": "Hour",
 						"interval": 24,
-						"startTime": "2024-03-05T10:30:00",
+						"startTime": "2024-03-11T17:39:00",
 						"timeZone": "Romance Standard Time"
 					}
 				}

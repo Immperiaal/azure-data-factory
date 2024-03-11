@@ -23,13 +23,13 @@
 			"type": "string",
 			"defaultValue": "0130-142130-e572svn2"
 		},
-		"FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_origin": {
-			"type": "string",
-			"defaultValue": "stg"
+		"StgToRawTrigger_properties_MoveFromStgToRaw_parameters_exec_books": {
+			"type": "bool",
+			"defaultValue": true
 		},
-		"FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_destination": {
-			"type": "string",
-			"defaultValue": "raw"
+		"StgToRawTrigger_properties_MoveFromStgToRaw_parameters_exec_metadata": {
+			"type": "bool",
+			"defaultValue": false
 		},
 		"containerUri": {
 			"type": "string",
@@ -70,11 +70,11 @@
 					"AzureDatabricks_properties_typeProperties_existingClusterId": {
 						"value": "[parameters('AzureDatabricks_properties_typeProperties_existingClusterId')]"
 					},
-					"FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_origin": {
-						"value": "[parameters('FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_origin')]"
+					"StgToRawTrigger_properties_MoveFromStgToRaw_parameters_exec_books": {
+						"value": "[parameters('StgToRawTrigger_properties_MoveFromStgToRaw_parameters_exec_books')]"
 					},
-					"FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_destination": {
-						"value": "[parameters('FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_destination')]"
+					"StgToRawTrigger_properties_MoveFromStgToRaw_parameters_exec_metadata": {
+						"value": "[parameters('StgToRawTrigger_properties_MoveFromStgToRaw_parameters_exec_metadata')]"
 					}
 				}
 			},

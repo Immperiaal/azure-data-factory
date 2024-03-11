@@ -17,11 +17,11 @@
 		"AzureDatabricks_properties_typeProperties_existingClusterId": {
 			"value": "0130-142130-e572svn2"
 		},
-		"FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_origin": {
-			"value": "stg"
+		"StgToRawTrigger_properties_MoveFromStgToRaw_parameters_exec_books": {
+			"value": true
 		},
-		"FromStgToRawTrigger_properties_MoveFromStgToRaw_parameters_destination": {
-			"value": "raw"
+		"StgToRawTrigger_properties_MoveFromStgToRaw_parameters_exec_metadata": {
+			"value": false
 		},
 		"containerUri": {
 			"value": ""
