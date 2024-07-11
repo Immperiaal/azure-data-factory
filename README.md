@@ -6,6 +6,7 @@
 -Extracción de datos: Conexión y extracción de datos desde bases de datos MySQL.
 
 -Carga de datos: Transferencia de datos extraídos a un contenedor de almacenamiento en Azure.
+
 -Automatización: Configuración de triggers para automatizar el proceso de extracción y carga.
 
 <h1>Requisitos</h1>
