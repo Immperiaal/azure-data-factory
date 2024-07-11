@@ -16,7 +16,6 @@ En este repositorio, exploramos el uso de Azure Data Factory para la extracción
 1. Clona este repositorio:
    ```bash
    git clone https://github.com/Immperiaal/azure-data-factory.git
-2. Configura tu Azure Data Factory con las instrucciones proporcionadas en la documentación.
 
 ## Uso
 1. Configura las conexiones a tu base de datos MySQL en Azure Data Factory.
@@ -43,7 +42,6 @@ In this repository, we explore the use of Azure Data Factory for extracting and 
 1. Clone this repository:
    ```bash
    git clone https://github.com/Immperiaal/azure-data-factory.git
-2. Set up your Azure Data Factory following the instructions provided in the documentation.
 
 ## Usage
 1. Configure connections to your MySQL database within Azure Data Factory.
