@@ -16,5 +16,25 @@
 
 - Conocimientos básicos de Azure Data Factory.
 
-🇬🇧
-<p>In this repository, we explore the use of Azure Data Factory for extracting and loading data from MySQL and files into a container. Additionally, we automate this process using triggers.</p>
+
+## 🇬🇧 Description
+
+This repository explores the use of Azure Data Factory for extracting and loading data from MySQL databases and files into an Azure storage container. Additionally, we automate this process using triggers.
+
+## Features
+
+- **Data Extraction**: Connect and extract data from MySQL databases.
+- **Data Loading**: Transfer extracted data to an Azure storage container.
+- **Automation**: Configure triggers to automate the extraction and loading process based on a specified schedule.
+
+## Requirements
+
+- An active Azure account.
+- Access to a MySQL database and relevant files for processing.
+- Basic knowledge of Azure Data Factory.
+
+## Installation
+
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/your_username/your_repository.git
