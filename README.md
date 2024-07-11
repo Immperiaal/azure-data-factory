@@ -11,7 +11,9 @@
 
 ## Requisitos
 -Una cuenta de Azure activa.
+
 -Acceso a una base de datos MySQL y archivos que se desean procesar.
+
 -Conocimientos básicos de Azure Data Factory.
 
 🇬🇧
