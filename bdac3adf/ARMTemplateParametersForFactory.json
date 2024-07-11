@@ -11,9 +11,6 @@
 		"MySql_connectionString": {
 			"value": ""
 		},
-		"Prueba_connectionString": {
-			"value": ""
-		},
 		"StgToRawTrigger_properties_MoveFromStgToRaw_parameters_exec_books": {
 			"value": true
 		},

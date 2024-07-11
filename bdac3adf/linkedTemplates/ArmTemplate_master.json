@@ -15,10 +15,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'MySql'"
 		},
-		"Prueba_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'Prueba'"
-		},
 		"StgToRawTrigger_properties_MoveFromStgToRaw_parameters_exec_books": {
 			"type": "bool",
 			"defaultValue": true
@@ -59,9 +55,6 @@
 					},
 					"MySql_connectionString": {
 						"value": "[parameters('MySql_connectionString')]"
-					},
-					"Prueba_connectionString": {
-						"value": "[parameters('Prueba_connectionString')]"
 					},
 					"StgToRawTrigger_properties_MoveFromStgToRaw_parameters_exec_books": {
 						"value": "[parameters('StgToRawTrigger_properties_MoveFromStgToRaw_parameters_exec_books')]"

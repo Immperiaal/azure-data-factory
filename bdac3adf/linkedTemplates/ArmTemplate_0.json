@@ -15,10 +15,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'MySql'"
 		},
-		"Prueba_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'Prueba'"
-		},
 		"StgToRawTrigger_properties_MoveFromStgToRaw_parameters_exec_books": {
 			"type": "bool",
 			"defaultValue": true
@@ -54,19 +50,6 @@
 				"type": "MySql",
 				"typeProperties": {
 					"connectionString": "[parameters('MySql_connectionString')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Prueba')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('Prueba_connectionString')]"
 				}
 			},
 			"dependsOn": []
