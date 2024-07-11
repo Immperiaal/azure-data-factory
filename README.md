@@ -4,16 +4,12 @@
 
 ## Características
 - **Extracción de datos**: Conexión y extracción de datos desde bases de datos MySQL.
-
 - **Carga de datos**: Transferencia de datos extraídos a un contenedor de almacenamiento en Azure.
-
 - **Automatización**: Configuración de triggers para automatizar el proceso de extracción y carga.
 
 ## Requisitos
 - Una cuenta de Azure activa.
-
 - Acceso a una base de datos MySQL y archivos que se desean procesar.
-
 - Conocimientos básicos de Azure Data Factory.
 
 
@@ -32,9 +28,3 @@ This repository explores the use of Azure Data Factory for extracting and loadin
 - An active Azure account.
 - Access to a MySQL database and relevant files for processing.
 - Basic knowledge of Azure Data Factory.
-
-## Installation
-
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/your_username/your_repository.git
