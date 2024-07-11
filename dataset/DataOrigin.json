@@ -2,7 +2,7 @@
 	"name": "DataOrigin",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "Prueba",
+			"referenceName": "AzureBlobStorage",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {

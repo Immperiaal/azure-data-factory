@@ -2,7 +2,7 @@
 	"name": "DataDestination",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "Prueba",
+			"referenceName": "AzureBlobStorage",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
