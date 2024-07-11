@@ -13,7 +13,6 @@ En este repositorio, exploramos el uso de Azure Data Factory para la extracción
 - Conocimientos básicos de Azure Data Factory.
 
 ## Instalación
-
 1. Clona este repositorio:
    ```bash
    git clone https://github.com/Immperiaal/azure-data-factory.git
@@ -31,19 +30,16 @@ Las contribuciones son bienvenidas. Por favor, abre un issue para discutir cualq
 In this repository, we explore the use of Azure Data Factory for extracting and loading books and their metadata from files and MySQL into an Azure storage container. Additionally, we automate this process using triggers to ensure tasks are executed efficiently and on schedule.
 
 ## Features
-
 - **Data Extraction**: Connect and extract data from MySQL databases.
 - **Data Loading**: Transfer extracted data to an Azure storage container.
 - **Automation**: Configure triggers to automate the extraction and loading process based on a specified schedule.
 
 ## Requirements
-
 - An active Azure account.
 - Access to a MySQL database and relevant files for processing.
 - Basic knowledge of Azure Data Factory.
 
 ## Installation
-
 1. Clone this repository:
    ```bash
    git clone https://github.com/Immperiaal/azure-data-factory.git
