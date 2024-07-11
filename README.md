@@ -1,6 +1,6 @@
 # big-data-adf
 ## 🇪🇸 Descripción
-En este repositorio, exploramos el uso de Azure Data Factory para la extracción y carga de datos desde MySQL y archivos hacia un contenedor en Azure. Además, automatizamos este proceso usando triggers para asegurar que las tareas se ejecuten de manera eficiente y programada.
+En este repositorio, exploramos el uso de Azure Data Factory para la extracción y carga de libros y sus metadatos desde archivos y MySQL hacia un contenedor en Azure. Además, automatizamos este proceso usando triggers para asegurar que las tareas se ejecuten de manera eficiente y programada.
 
 ## Características
 - **Extracción de datos**: Conexión y extracción de datos desde bases de datos MySQL.
@@ -28,7 +28,7 @@ En este repositorio, exploramos el uso de Azure Data Factory para la extracción
 Las contribuciones son bienvenidas. Por favor, abre un issue para discutir cualquier cambio importante antes de realizarlo.
 
 ## 🇬🇧 Description
-This repository explores the use of Azure Data Factory for extracting and loading data from MySQL databases and files into an Azure storage container. Additionally, we automate this process using triggers.
+In this repository, we explore the use of Azure Data Factory for extracting and loading books and their metadata from files and MySQL into an Azure storage container. Additionally, we automate this process using triggers to ensure tasks are executed efficiently and on schedule.
 
 ## Features
 
