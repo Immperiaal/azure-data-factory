@@ -11,7 +11,11 @@ En este repositorio, exploramos el uso de Azure Data Factory para la extracción
 - Una cuenta de Azure activa.
 - Acceso a una base de datos MySQL y archivos que se desean procesar.
 - Conocimientos básicos de Azure Data Factory.
-
+- 
+## Instalación
+1. Clona este repositorio:
+   ```bash
+   git clone https://github.com/Immperiaal/azure-data-factory.git
 
 ## 🇬🇧 Description
 This repository explores the use of Azure Data Factory for extracting and loading data from MySQL databases and files into an Azure storage container. Additionally, we automate this process using triggers.
