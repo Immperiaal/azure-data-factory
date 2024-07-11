@@ -4,16 +4,12 @@
 
 <h1>Características</h1>
 -Extracción de datos: Conexión y extracción de datos desde bases de datos MySQL.
-
 -Carga de datos: Transferencia de datos extraídos a un contenedor de almacenamiento en Azure.
-
 -Automatización: Configuración de triggers para automatizar el proceso de extracción y carga.
 
 <h1>Requisitos</h1>
 -Una cuenta de Azure activa.
-
 -Acceso a una base de datos MySQL y archivos que se desean procesar.
-
 -Conocimientos básicos de Azure Data Factory.
 
 🇬🇧
