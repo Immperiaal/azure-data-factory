@@ -1,4 +1,4 @@
-# big-data-adf
+# books-azure-datafactory
 ## 🇪🇸 Descripción
 En este repositorio, exploramos el uso de Azure Data Factory para la extracción y carga de libros y sus metadatos desde archivos y MySQL hacia un contenedor en Azure. Además, automatizamos este proceso usando triggers para asegurar que las tareas se ejecuten de manera eficiente y programada.
 
