@@ -8,8 +8,10 @@
 -Automatización: Configuración de triggers para automatizar el proceso de extracción y carga.
 
 <h1>Requisitos</h1>
--Una cuenta de Azure activa./n
+-Una cuenta de Azure activa.
+
 -Acceso a una base de datos MySQL y archivos que se desean procesar.
+
 -Conocimientos básicos de Azure Data Factory.
 
 🇬🇧
