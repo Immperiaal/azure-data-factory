@@ -98,7 +98,7 @@
 			},
 			"exec_metadata": {
 				"type": "bool",
-				"defaultValue": false
+				"defaultValue": true
 			}
 		},
 		"variables": {
