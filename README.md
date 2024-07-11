@@ -11,7 +11,7 @@ En este repositorio, exploramos el uso de Azure Data Factory para la extracción
 - Una cuenta de Azure activa.
 - Acceso a una base de datos MySQL y archivos que se desean procesar.
 - Conocimientos básicos de Azure Data Factory.
-- 
+
 ## Instalación
 
 1. Clona este repositorio:
@@ -20,9 +20,9 @@ En este repositorio, exploramos el uso de Azure Data Factory para la extracción
 2. Configura tu Azure Data Factory con las instrucciones proporcionadas en la documentación.
 
 ## Uso
-1.Configura las conexiones a tu base de datos MySQL y archivos en Azure Data Factory.
-2.Define las actividades de extracción y carga en los pipelines.
-3.onfigura los triggers para automatizar el proceso según tu programación deseada.
+1. Configura las conexiones a tu base de datos MySQL y archivos en Azure Data Factory.
+2. Define las actividades de extracción y carga en los pipelines.
+3. Configura los triggers para automatizar el proceso según tu programación deseada.
 
 ## Contribución
 Las contribuciones son bienvenidas. Por favor, abre un issue para discutir cualquier cambio importante antes de realizarlo.
