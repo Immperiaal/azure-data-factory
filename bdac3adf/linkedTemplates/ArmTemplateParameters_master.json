@@ -5,7 +5,7 @@
 		"factoryName": {
 			"value": "bdac3adf"
 		},
-		"AzureDatabricks_accessToken": {
+		"AzureBlobStorage_connectionString": {
 			"value": ""
 		},
 		"MySql_connectionString": {
@@ -13,9 +13,6 @@
 		},
 		"Prueba_connectionString": {
 			"value": ""
-		},
-		"AzureDatabricks_properties_typeProperties_existingClusterId": {
-			"value": "0130-142130-e572svn2"
 		},
 		"StgToRawTrigger_properties_MoveFromStgToRaw_parameters_exec_books": {
 			"value": true
